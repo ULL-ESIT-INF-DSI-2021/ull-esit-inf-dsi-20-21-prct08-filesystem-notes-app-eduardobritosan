@@ -4,7 +4,7 @@ import { Notes } from '../src/notes';
 
 
 describe('Notes methods tests', () => {
-  describe('Notes instance getter function tests', () => {
+  describe('Notes instance getter method tests', () => {
     it('Notes.getNotesInstance() should be an object', () => {
       expect(Notes.getNotesInstance()).to.be.an('object');
     });
@@ -28,6 +28,30 @@ describe('Notes methods tests', () => {
     });
   });
 
+  describe('listNotes method tests', () => {
+    it(`notesInstance.listNotes
+    should return 'Your notes\nRed note'`, () => {
+      expect(noteInstance.listNotes('brito'))
+        .to.equal('Your notes\nRed note');
+    });
+    it(`noteInstance.listNotes should return 'Your notes\nRed note'`, () => {
+      expect(noteInstance.listNotes('eebritosa'))
+        .to.equal('Your notes\n');
+    });
+  });
+
+  describe('readNote method tests', () => {
+    it(`noteInstance.readNote should return 'Note not found!'`, () => {
+      expect(noteInstance.readNote('brito', 'Blue note'))
+        .to.equal('Note not found!');
+    });
+    it(`noteInstance.readNote should return
+     'Red note\nThis is a red note'`, () => {
+      expect(noteInstance.readNote('brito', 'Red note'))
+        .to.eql('Red note\nThis is a red note');
+    });
+  });
+
   describe('Modifying a note methods tests', () => {
     it('modifyNote should return \'Note modified succesfully!\'', () => {
       expect(noteInstance.modifyNote('brito', 'Red note',
@@ -40,6 +64,8 @@ describe('Notes methods tests', () => {
         'Green')).to.equal('Note not found!');
     });
   });
+
+
 
   describe('Removing a note methods tests', () => {
     it('removeNote should return \'Note removed!\'', () => {
