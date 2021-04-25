@@ -109,6 +109,14 @@ export class Notes {
     });
   }
 
+  /**
+   * @description Modifies an existing note
+   * @param user Owner of the note
+   * @param title Title of the note
+   * @param content The new content of the note
+   * @param color The new color of the note
+   * @returns a string with the result of the modification
+   */
   public modifyNote(user: string, title: string, content?: string,
     color?: string) {
     const route = this.getNoteRoute(user, title);
@@ -132,5 +140,81 @@ export class Notes {
     fs.writeFileSync(route, data);
     console.log(chalk.green(GreenMessages.noteModified));
     return GreenMessages.noteModified;
+  }
+
+  /**
+   * @description Lists all the titles of the notes of a specific user
+   * @param user the owner of the notes to be listed
+   * @returns the uncolored list of the notes' titles
+   */
+  public listNotes(user: string) {
+    const dir = this.getFolderRoute(user);
+    let list = 'Your notes';
+    let coloredList = 'Your notes';
+    fs.readdirSync(dir).forEach((file) => {
+      const fileData = fs.readFileSync(dir + file);
+      const dataToJson = JSON.parse(fileData.toString());
+      switch (dataToJson.color) {
+        case 'Blue':
+          list += '\n' + dataToJson.title;
+          coloredList += chalk.blue('\n' + dataToJson.title);
+          break;
+        case 'Red':
+          list += '\n' + dataToJson.title;
+          coloredList += chalk.red('\n' + dataToJson.title);
+          break;
+        case 'Yellow':
+          list += '\n' + dataToJson.title;
+          coloredList += chalk.yellow('\n' + dataToJson.title);
+          break;
+        case 'Green':
+          list += '\n' + dataToJson.title;
+          coloredList += chalk.green('\n' + dataToJson.title);
+          break;
+        default:
+          list += '\n' + dataToJson.title;
+          coloredList += chalk.blue('\n' + dataToJson.title);
+          break;
+      }
+    });
+    console.log(coloredList);
+    return list;
+  }
+
+  public readNote(user: string, title: string) {
+    const dir = this.getFolderRoute(user);
+    const fileRoute = dir + `${title}`;
+    if (!fs.existsSync(fileRoute)) {
+      console.log(chalk.red(RedMessages.noteNotFound));
+      return RedMessages.noteNotFound;
+    }
+    const fileData = fs.readFileSync(fileRoute);
+    const dataToJson = JSON.parse(fileData.toString());
+    let coloredList = dataToJson.title + '\n';
+    let data = dataToJson.title + '\n';
+    switch (dataToJson.color) {
+      case 'Blue':
+        coloredList += chalk.blue(dataToJson.content);
+        data += dataToJson.content;
+        break;
+      case 'Red':
+        coloredList += chalk.red(dataToJson.content);
+        data += dataToJson.content;
+        break;
+      case 'Yellow':
+        coloredList += chalk.yellow(dataToJson.content);
+        data += dataToJson.content;
+        break;
+      case 'Green':
+        coloredList += chalk.green(dataToJson.content);
+        data += dataToJson.content;
+        break;
+      default:
+        coloredList += dataToJson.content;
+        data += dataToJson.content;
+        break;
+    }
+    console.log(coloredList);
+    return data;
   }
 }

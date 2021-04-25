@@ -36,7 +36,7 @@ describe('Notes methods tests', () => {
     });
     it(`noteInstance.listNotes should return 'Your notes\nRed note'`, () => {
       expect(noteInstance.listNotes('eebritosa'))
-        .to.equal('Your notes\n');
+        .to.equal('Your notes');
     });
   });
 
@@ -46,9 +46,9 @@ describe('Notes methods tests', () => {
         .to.equal('Note not found!');
     });
     it(`noteInstance.readNote should return
-     'Red note\nThis is a red note'`, () => {
+     'Red note\nContent of the red note, by brito`, () => {
       expect(noteInstance.readNote('brito', 'Red note'))
-        .to.eql('Red note\nThis is a red note');
+        .to.eql('Red note\nContent of the red note, by brito');
     });
   });
 
