@@ -25,8 +25,8 @@ describe('Notes methods tests', () => {
       expect(noteInstance.addNote('brito', 'Red note',
         'Content of the red note, by brito',
         'Red')).to.equal('Note title taken!');
+      noteInstance.removeNote('brito', 'Red note');
+      noteInstance.removeFolder('brito');
     });
-    noteInstance.removeNote('brito', 'Red note');
-    noteInstance.removeFolder('brito');
   });
 });

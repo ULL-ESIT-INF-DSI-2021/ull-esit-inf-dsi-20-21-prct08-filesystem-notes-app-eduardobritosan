@@ -4,9 +4,9 @@ import * as Files from 'fs';
  * @description Available chalk colors
  */
 export const Colors = {
+  green: 'Green',
   red: 'Red',
   yellow: 'Yellow',
-  green: 'Green',
   blue: 'Blue',
 };
 
@@ -70,7 +70,6 @@ export class Notes {
    */
   public removeNote(user: string, title: string) {
     const route = `${this.getRoute(user)}${title}`;
-    console.log(route);
     if (!Files.existsSync(route)) {
       return 'Note not found!';
     }
@@ -80,6 +79,8 @@ export class Notes {
 
   public removeFolder(user: string) {
     const route = this.getRoute(user);
-    Files.rmdirSync(route);
+    Files.rmdirSync(route, {
+      recursive: true,
+    });
   }
 }
