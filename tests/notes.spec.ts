@@ -21,5 +21,6 @@ describe('Notes methods tests', () => {
         'Content of the red note, by brito',
         'Red')).to.equal('New note added!');
     });
+    noteInstance.removeNote('brito', 'Red note');
   });
 });
