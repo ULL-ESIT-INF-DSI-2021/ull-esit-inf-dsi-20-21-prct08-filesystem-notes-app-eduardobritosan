@@ -21,6 +21,12 @@ describe('Notes methods tests', () => {
         'Content of the red note, by brito',
         'Red')).to.equal('New note added!');
     });
+    it('addNote should return \'Note title taken!\'', () => {
+      expect(noteInstance.addNote('brito', 'Red note',
+        'Content of the red note, by brito',
+        'Red')).to.equal('Note title taken!');
+    });
     noteInstance.removeNote('brito', 'Red note');
+    noteInstance.removeFolder('brito');
   });
 });
