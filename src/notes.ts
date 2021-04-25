@@ -167,13 +167,13 @@ export class Notes {
           list += '\n' + dataToJson.title;
           coloredList += chalk.yellow('\n' + dataToJson.title);
           break;
-        case 'greeb':
+        case 'green':
           list += '\n' + dataToJson.title;
           coloredList += chalk.green('\n' + dataToJson.title);
           break;
         default:
           list += '\n' + dataToJson.title;
-          coloredList += chalk.blue('\n' + dataToJson.title);
+          coloredList += '\n' + dataToJson.title;
           break;
       }
     });
@@ -205,7 +205,7 @@ export class Notes {
         coloredList += chalk.yellow(dataToJson.body);
         data += dataToJson.body;
         break;
-      case 'greeb':
+      case 'green':
         coloredList += chalk.green(dataToJson.body);
         data += dataToJson.body;
         break;
