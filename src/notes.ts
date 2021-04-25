@@ -1,4 +1,15 @@
+import chalk from 'chalk';
 import * as Files from 'fs';
+
+/**
+ * @description Available chalk colors
+ */
+export const Colors = {
+  red: 'Red',
+  yellow: 'Yellow',
+  green: 'Green',
+  blue: 'Blue',
+};
 
 /**
  * @description Notes class that defines several filesystem methods.
@@ -36,6 +47,9 @@ export class Notes {
       `{ "title": "${title}", "content": "${content}", "color": "${color}" }`;
     const folder = this.getRoute(user);
     const route = folder + title;
+    if (Files.existsSync(route)) {
+      return chalk.red('Note title taken!');
+    }
     Files.writeFileSync(route, dataString);
     return 'New note added!';
   }
