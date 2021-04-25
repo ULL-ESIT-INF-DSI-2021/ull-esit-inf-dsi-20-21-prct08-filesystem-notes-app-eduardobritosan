@@ -11,7 +11,7 @@ export const GreenMessages = {
 };
 
 /**
- * @description Red messages
+ * @description red messages
  */
 export const RedMessages = {
   noteTitleTaken: 'Note title taken!',
@@ -40,14 +40,14 @@ export class Notes {
    * @description Method that adds new notes and saves them in the filesystem
    * @param user The owner of the note's username
    * @param title The title of the new note
-   * @param content The content of the note
+   * @param body The body of the note
    * @param color The color of the note
    * @returns a string saying 'New note added!' if it doesn't exist
    * and 'Note title taken' if it does
    */
-  public addNote(user: string, title: string, content: string, color: string) {
+  public addNote(user: string, title: string, body: string, color: string) {
     const dataString =
-      `{ "title": "${title}", "content": "${content}", "color": "${color}" }`;
+      `{ "title": "${title}", "body": "${body}", "color": "${color}" }`;
     const folder = this.getFolderRoute(user);
     const route = folder + title;
     if (fs.existsSync(route)) {
@@ -113,11 +113,11 @@ export class Notes {
    * @description Modifies an existing note
    * @param user Owner of the note
    * @param title Title of the note
-   * @param content The new content of the note
+   * @param body The new body of the note
    * @param color The new color of the note
    * @returns a string with the result of the modification
    */
-  public modifyNote(user: string, title: string, content?: string,
+  public modifyNote(user: string, title: string, body?: string,
     color?: string) {
     const route = this.getNoteRoute(user, title);
     if (!fs.existsSync(route)) {
@@ -126,16 +126,16 @@ export class Notes {
     }
     const fileData = fs.readFileSync(route);
     const jsonData = JSON.parse(fileData.toString());
-    let newContent = content;
+    let newContent = body;
     let newColor = color;
-    if (content === undefined) {
-      newContent = jsonData.content;
+    if (body === undefined) {
+      newContent = jsonData.body;
     }
     if (color === undefined) {
       newColor = jsonData.color;
     }
     const data =
-      `{ "title": "${title}", "content": "${newContent}",` +
+      `{ "title": "${title}", "body": "${newContent}",` +
       ` "color": "${newColor}" }`;
     fs.writeFileSync(route, data);
     console.log(chalk.green(GreenMessages.noteModified));
@@ -155,19 +155,19 @@ export class Notes {
       const fileData = fs.readFileSync(dir + file);
       const dataToJson = JSON.parse(fileData.toString());
       switch (dataToJson.color) {
-        case 'Blue':
+        case 'blue':
           list += '\n' + dataToJson.title;
           coloredList += chalk.blue('\n' + dataToJson.title);
           break;
-        case 'Red':
+        case 'red':
           list += '\n' + dataToJson.title;
           coloredList += chalk.red('\n' + dataToJson.title);
           break;
-        case 'Yellow':
+        case 'yellow':
           list += '\n' + dataToJson.title;
           coloredList += chalk.yellow('\n' + dataToJson.title);
           break;
-        case 'Green':
+        case 'greeb':
           list += '\n' + dataToJson.title;
           coloredList += chalk.green('\n' + dataToJson.title);
           break;
@@ -193,25 +193,25 @@ export class Notes {
     let coloredList = dataToJson.title + '\n';
     let data = dataToJson.title + '\n';
     switch (dataToJson.color) {
-      case 'Blue':
-        coloredList += chalk.blue(dataToJson.content);
-        data += dataToJson.content;
+      case 'blue':
+        coloredList += chalk.blue(dataToJson.body);
+        data += dataToJson.body;
         break;
-      case 'Red':
-        coloredList += chalk.red(dataToJson.content);
-        data += dataToJson.content;
+      case 'red':
+        coloredList += chalk.red(dataToJson.body);
+        data += dataToJson.body;
         break;
-      case 'Yellow':
-        coloredList += chalk.yellow(dataToJson.content);
-        data += dataToJson.content;
+      case 'yellow':
+        coloredList += chalk.yellow(dataToJson.body);
+        data += dataToJson.body;
         break;
-      case 'Green':
-        coloredList += chalk.green(dataToJson.content);
-        data += dataToJson.content;
+      case 'greeb':
+        coloredList += chalk.green(dataToJson.body);
+        data += dataToJson.body;
         break;
       default:
-        coloredList += dataToJson.content;
-        data += dataToJson.content;
+        coloredList += dataToJson.body;
+        data += dataToJson.body;
         break;
     }
     console.log(coloredList);

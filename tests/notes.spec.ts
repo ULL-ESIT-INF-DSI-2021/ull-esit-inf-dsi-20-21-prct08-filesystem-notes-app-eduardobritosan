@@ -66,7 +66,6 @@ describe('Notes methods tests', () => {
   });
 
 
-
   describe('Removing a note methods tests', () => {
     it('removeNote should return \'Note removed!\'', () => {
       expect(noteInstance.removeNote('brito', 'Red note')).
@@ -76,6 +75,7 @@ describe('Notes methods tests', () => {
       expect(noteInstance.removeNote('brito', 'Red note')).
         to.equal('Note not found!');
       noteInstance.removeFolder('brito');
+      noteInstance.removeFolder('eebritosa');
     });
   });
 });
