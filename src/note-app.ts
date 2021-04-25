@@ -32,7 +32,7 @@ yargs.command({
     if (typeof argv.title === 'string') {
       const newNote = {
         user: argv.user as string,
-        title: argv.title as string,
+        title: argv.title,
         body: argv.body as string,
         color: argv.color as string,
       };
@@ -98,7 +98,7 @@ yargs.command({
     if (typeof argv.title === 'string') {
       const newNote = {
         user: argv.user as string,
-        title: argv.title as string,
+        title: argv.title,
         body: argv.body as string,
         color: argv.color as string,
       };
