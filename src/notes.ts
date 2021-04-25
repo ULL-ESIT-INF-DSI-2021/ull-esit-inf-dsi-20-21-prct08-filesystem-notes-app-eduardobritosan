@@ -7,7 +7,7 @@ export class Notes {
   /**
    * @description Notes class constructor
    */
-  constructor() { };
+  constructor() {}
 
   /**
    * @description Static method that returns the notes instance. If it doesn't

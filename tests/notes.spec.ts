@@ -8,5 +8,8 @@ describe('Notes methods tests', () => {
     it('Notes.getNotesInstance() should be an object', () => {
       expect(Notes.getNotesInstance()).to.be.an('object');
     });
+    it('Notes instance should be already initialized', () => {
+      expect(Notes.getNotesInstance()).to.be.an('object');
+    });
   });
 });
