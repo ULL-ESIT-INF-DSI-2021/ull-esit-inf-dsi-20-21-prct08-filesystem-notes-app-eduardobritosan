@@ -25,7 +25,17 @@ describe('Notes methods tests', () => {
       expect(noteInstance.addNote('brito', 'Red note',
         'Content of the red note, by brito',
         'Red')).to.equal('Note title taken!');
-      noteInstance.removeNote('brito', 'Red note');
+    });
+  });
+
+  describe('Removing a note methods tests', () => {
+    it('removeNote should return \'Note removed!\'', () => {
+      expect(noteInstance.removeNote('brito', 'Red note')).
+        to.equal('Note removed!');
+    });
+    it('removeNote should return \'Note not found!\'', () => {
+      expect(noteInstance.removeNote('brito', 'Red note')).
+        to.equal('Note not found!');
       noteInstance.removeFolder('brito');
     });
   });

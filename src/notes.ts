@@ -11,6 +11,22 @@ export const Colors = {
 };
 
 /**
+ * @description Green messages
+ */
+export const GreenMessages = {
+  noteAdded: 'New note added!',
+  noteRemoved: 'Note removed!',
+};
+
+/**
+ * @description Red messages
+ */
+export const RedMessages = {
+  noteTitleTaken: 'Note title taken!',
+  noteNotFound: 'Note not found!',
+};
+
+/**
  * @description Notes class that defines several filesystem methods.
  */
 export class Notes {
@@ -43,10 +59,10 @@ export class Notes {
     const folder = this.getRoute(user);
     const route = folder + title;
     if (Files.existsSync(route)) {
-      return 'Note title taken!';
+      return RedMessages.noteTitleTaken;
     }
     Files.writeFileSync(route, dataString);
-    return 'New note added!';
+    return GreenMessages.noteAdded;
   }
 
   /**
@@ -71,12 +87,16 @@ export class Notes {
   public removeNote(user: string, title: string) {
     const route = `${this.getRoute(user)}${title}`;
     if (!Files.existsSync(route)) {
-      return 'Note not found!';
+      return RedMessages.noteNotFound;
     }
     Files.rmSync(route);
-    return 'Note removed!';
+    return GreenMessages.noteRemoved;
   }
 
+  /**
+   * @description Deletes an empty folder
+   * @param user The user whose folder will be deleted
+   */
   public removeFolder(user: string) {
     const route = this.getRoute(user);
     Files.rmdirSync(route, {
