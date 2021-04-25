@@ -27,6 +27,8 @@ Para la implementación, se siguió la metodología TDD, diseñando los tests, p
 
 ![Tests yargs](img/yargs-tests.png)
 
+Algo curioso es que los tests para yargs no pasan en la github action, a pesar de que si funcionan correctamente en local.
+
 La implementación del diseño de clases fue sencillo, tras lo comentado anteriormente, en donde solo tenemos dos ficheros de fuente: notes.ts y note-app.ts
 
 ![Note methods](img/note-class.png)
