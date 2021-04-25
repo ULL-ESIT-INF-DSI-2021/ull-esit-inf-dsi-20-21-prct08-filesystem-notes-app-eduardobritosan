@@ -28,6 +28,19 @@ describe('Notes methods tests', () => {
     });
   });
 
+  describe('Modifying a note methods tests', () => {
+    it('modifyNote should return \'Note modified succesfully!\'', () => {
+      expect(noteInstance.modifyNote('brito', 'Red note',
+        'Content of the green note, previously red, by brito',
+        'Green')).to.equal('Note modified succesfully!');
+    });
+    it('modifyNote should return \'Note not found!\'', () => {
+      expect(noteInstance.modifyNote('brito', 'Green note',
+        'Content of the green note, by brito',
+        'Green')).to.equal('Note not found!');
+    });
+  });
+
   describe('Removing a note methods tests', () => {
     it('removeNote should return \'Note removed!\'', () => {
       expect(noteInstance.removeNote('brito', 'Red note')).

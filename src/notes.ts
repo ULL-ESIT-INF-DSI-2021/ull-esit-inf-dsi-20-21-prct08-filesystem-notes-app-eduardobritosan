@@ -1,4 +1,5 @@
-import * as Files from 'fs';
+import chalk from 'chalk';
+import * as fs from 'fs';
 
 /**
  * @description Green messages
@@ -6,6 +7,7 @@ import * as Files from 'fs';
 export const GreenMessages = {
   noteAdded: 'New note added!',
   noteRemoved: 'Note removed!',
+  noteModified: 'Note modified succesfully!',
 };
 
 /**
@@ -46,12 +48,14 @@ export class Notes {
   public addNote(user: string, title: string, content: string, color: string) {
     const dataString =
       `{ "title": "${title}", "content": "${content}", "color": "${color}" }`;
-    const folder = this.getRoute(user);
+    const folder = this.getFolderRoute(user);
     const route = folder + title;
-    if (Files.existsSync(route)) {
+    if (fs.existsSync(route)) {
+      console.log(chalk.red(RedMessages.noteTitleTaken));
       return RedMessages.noteTitleTaken;
     }
-    Files.writeFileSync(route, dataString);
+    fs.writeFileSync(route, dataString);
+    console.log(chalk.green(GreenMessages.noteAdded));
     return GreenMessages.noteAdded;
   }
 
@@ -60,12 +64,21 @@ export class Notes {
    * @param user The name of the user from which the folder is found
    * @returns The route of the folder
    */
-  private getRoute(user: string) {
+  private getFolderRoute(user: string) {
     const route = `./src/${user}/`;
-    if (!Files.existsSync(route)) {
-      Files.mkdirSync(route);
+    if (!fs.existsSync(route)) {
+      fs.mkdirSync(route);
     }
     return route;
+  }
+
+  /**
+ * @description Returns the route of the note specified by args
+ * @param user The name of the user from which the note is found
+ * @returns The route of the note
+ */
+  private getNoteRoute(user: string, title: string) {
+    return `${this.getFolderRoute(user)}${title}`;
   }
 
   /**
@@ -75,11 +88,13 @@ export class Notes {
    * @returns A string with the result of the operation
    */
   public removeNote(user: string, title: string) {
-    const route = `${this.getRoute(user)}${title}`;
-    if (!Files.existsSync(route)) {
+    const route = `${this.getFolderRoute(user)}${title}`;
+    if (!fs.existsSync(route)) {
+      console.log(chalk.red(RedMessages.noteNotFound));
       return RedMessages.noteNotFound;
     }
-    Files.rmSync(route);
+    fs.rmSync(route);
+    console.log(chalk.green(GreenMessages.noteRemoved));
     return GreenMessages.noteRemoved;
   }
 
@@ -88,9 +103,34 @@ export class Notes {
    * @param user The user whose folder will be deleted
    */
   public removeFolder(user: string) {
-    const route = this.getRoute(user);
-    Files.rmdirSync(route, {
+    const route = this.getFolderRoute(user);
+    fs.rmdirSync(route, {
       recursive: true,
     });
+  }
+
+  public modifyNote(user: string, title: string, content?: string,
+    color?: string) {
+    const route = this.getNoteRoute(user, title);
+    if (!fs.existsSync(route)) {
+      console.log(chalk.red(RedMessages.noteNotFound));
+      return RedMessages.noteNotFound;
+    }
+    const fileData = fs.readFileSync(route);
+    const jsonData = JSON.parse(fileData.toString());
+    let newContent = content;
+    let newColor = color;
+    if (content === undefined) {
+      newContent = jsonData.content;
+    }
+    if (color === undefined) {
+      newColor = jsonData.color;
+    }
+    const data =
+      `{ "title": "${title}", "content": "${newContent}",` +
+      ` "color": "${newColor}" }`;
+    fs.writeFileSync(route, data);
+    console.log(chalk.green(GreenMessages.noteModified));
+    return GreenMessages.noteModified;
   }
 }
