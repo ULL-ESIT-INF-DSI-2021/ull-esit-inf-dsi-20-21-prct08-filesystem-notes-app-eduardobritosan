@@ -1,16 +1,6 @@
 import * as Files from 'fs';
 
 /**
- * @description Available chalk colors
- */
-export const Colors = {
-  green: 'Green',
-  red: 'Red',
-  yellow: 'Yellow',
-  blue: 'Blue',
-};
-
-/**
  * @description Green messages
  */
 export const GreenMessages = {
